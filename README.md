@@ -1,16 +1,5 @@
-# ads_platform
+# Demo Demonstration
+![1](https://user-images.githubusercontent.com/71262438/133938824-2d90ac66-32b3-4cf0-b23e-5dc07076b1f3.gif)
+![2](https://user-images.githubusercontent.com/71262438/133938979-6c542150-534b-44d8-9efe-0b18e52c9041.gif)
+![3](https://user-images.githubusercontent.com/71262438/133938634-443e37a4-743b-4a84-96ed-c251ad52d367.gif)
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
