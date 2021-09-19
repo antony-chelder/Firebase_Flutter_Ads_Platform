@@ -11,6 +11,13 @@ class UpdateImagePick extends StatefulWidget {
   File? _imagefile1;
   File? _imagefile2;
 
+  String? titletext;
+  String? pricetext;
+  String? phonetext;
+  String? desctext;
+  String? city;
+  String? currency;
+  String? currentcat;
 
   String? url1;
   String? url2;
@@ -19,7 +26,7 @@ class UpdateImagePick extends StatefulWidget {
   DocumentSnapshot? doc;
 
 
-  UpdateImagePick(this._imagefile, this._imagefile1, this._imagefile2, this.url1, this.url2,this.url3,this.doc);
+  UpdateImagePick(this._imagefile, this._imagefile1, this._imagefile2, this.url1, this.url2,this.url3,this.doc,this.titletext,this.pricetext,this.phonetext,this.desctext,this.city,this.currency,this.currentcat);
 
   @override
   _UpdateImagePickState createState() => _UpdateImagePickState();
@@ -114,15 +121,28 @@ class _UpdateImagePickState extends State<UpdateImagePick> {
                     },
                   ),
                 ),
-                SizedBox(height: 16,),
-                ElevatedButton(onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditAdd(null, null, null, null,widget.doc,widget.url1, widget.url2, widget.url3, widget._imagefile, widget._imagefile1, widget._imagefile2)));
-                }, child: Text('Confirm'))
               ],
             ),
           ),
         ),
       ),
+        floatingActionButton:  FloatingActionButton(onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                EditAdd(
+                    widget.titletext,
+                    widget.pricetext,
+                    widget.phonetext,
+                    widget.desctext,
+                    widget.doc,
+                    widget.url1,
+                    widget.url2,
+                    widget.url3,
+                    widget._imagefile,
+                    widget._imagefile1,
+                    widget._imagefile2,widget.city,widget.currency,widget.currentcat)));
+          }
+    , child: Icon(Icons.check,color: Colors.white,))
     );
   }
 }
+

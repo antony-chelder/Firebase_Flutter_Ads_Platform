@@ -1,4 +1,6 @@
+import 'package:ads_platform/screens/edit_screen.dart';
 import 'package:ads_platform/ui/add_item_ui.dart';
+import 'package:ads_platform/ui/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class MyAds extends StatefulWidget {
   static const id = "my_ads";
+
 
   @override
   _MyAdsState createState() => _MyAdsState();
@@ -46,9 +49,14 @@ class _MyAdsState extends State<MyAds> {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context,index){
                 DocumentSnapshot ads = snapshot.data!.docs[index];
+                String? favuid = user != null
+                    ? user?.uid
+                    : googleUser?.id;
                 final userad = (ads.data()as dynamic)['userid'];
-                return Ads((ads.data() as dynamic)['title'], (ads.data() as dynamic)['price'],(ads.data() as dynamic)['url1'],
-                    userad == user?.uid || userad == googleUser?.id?IconButton(
+                return Ads((ads.data() as dynamic)['title'], (ads.data() as dynamic)['price'],(ads.data() as dynamic)['url1'],(ads.data() as dynamic)['desc'],
+                    (ads.data() as dynamic)['location'],
+                    userad == user?.uid || userad == googleUser?.id?ElevatedButton(
+                      child: Text('Удалить'),
                   onPressed: userad == user?.uid || userad == googleUser?.id?() async{
                     bool result = await DataConnectionChecker().hasConnection;
                        try {
@@ -69,7 +77,6 @@ class _MyAdsState extends State<MyAds> {
                             }, child: Text('No') )
                           ],
                         );
-
                       });
                     } else {
                       final snackbarerror = SnackBar(
@@ -81,15 +88,63 @@ class _MyAdsState extends State<MyAds> {
                   }
 
                 } : null,
-                  icon: userad == user?.uid || userad == googleUser?.id?Icon(Icons.delete) : Icon(null)
-
                 ) : null,
-                        IconButton(
-                          icon: userad == user?.uid || userad == googleUser?.id?Icon(Icons.edit) : Icon(null) ,
-                          onPressed:(){
-                            print('Click');
-                          }
-                        )
+                    userad == user?.uid || userad == googleUser?.id? ElevatedButton(
+                        child: Text('Изменить'),
+                        onPressed: userad == user?.uid || userad ==  googleUser?.id  ?(){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)
+                          => EditAdd((ads.data() as dynamic)['title'],
+                              (ads.data() as dynamic)['price'],
+                              (ads.data() as dynamic)['phone'],
+                              (ads.data() as dynamic)['desc'],ads,(ads.data() as dynamic)['url1'],(ads.data() as dynamic)['url2'],(ads.data() as dynamic)['url3'],null,null,null,(ads.data() as dynamic)['city'],(ads.data() as dynamic)['currency'],(ads.data() as dynamic)['category'])));
+                        } : null
+                    ) :  ElevatedButton(
+
+                      onPressed: (){
+
+                        String ref = ads.reference.id;
+                        if (favuid != null) {
+                          setState(() {
+                            if ((ads.data() as dynamic)['isfav$favuid'] == null || !(ads.data() as dynamic)['isfav$favuid']) {
+                              myads.doc(ref).update({
+                                'isfav$favuid': true
+
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text("Add to Favourite list"),
+                              ));
+                            }
+                            else {
+                              myads.doc(ref).update({
+                                'isfav$favuid': false
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text(
+                                    "Deleted from Favourite list"),
+                              ));
+
+                            }
+                          });
+                          setState(() {
+                            !(ads.data() as dynamic)['isfav$favuid'] == (ads.data() as dynamic)['isfav$favuid'];
+                          });
+                        }
+                      },
+
+
+                      child: Text((ads.data() as dynamic)['isfav$favuid'] == null || !(ads.data() as dynamic)['isfav$favuid']? 'Unfavourite' : 'Favourite',style:
+                      TextStyle( color: (ads.data() as dynamic)['isfav$favuid'] == null || !(ads.data() as dynamic)['isfav$favuid']? Colors.green : Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                        primary: (ads.data() as dynamic)['isfav$favuid'] == null || !(ads.data() as dynamic)['isfav$favuid']? Colors.white : Colors.black12,
+                      ),
+
+                    ),Icon(
+                      Icons.remove_red_eye,color: MyColors.navy[100],
+                    ),Text((ads.data() as dynamic)['viewcount'] != null?(ads.data() as dynamic)['viewcount'].toString() : '0',style: TextStyle(color: Colors.white,fontSize: 15),)
                  );
 
               });

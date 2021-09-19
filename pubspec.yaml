@@ -39,6 +39,10 @@ dependencies:
   data_connection_checker:
   firebase_storage:
   image_picker:
+  get:
+  progress_hud:
+  url_launcher:
+
 
 
   # The following adds the Cupertino Icons font to your application.

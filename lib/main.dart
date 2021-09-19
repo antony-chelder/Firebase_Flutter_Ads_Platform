@@ -6,7 +6,6 @@ import 'package:ads_platform/screens/all_ads_screen.dart';
 import 'package:ads_platform/screens/home_screen.dart';
 import 'package:ads_platform/screens/image_pick_screen.dart';
 import 'package:ads_platform/screens/new_ad_screen.dart';
-import 'package:ads_platform/screens/show_ad_screen.dart';
 import 'package:ads_platform/screens/sign_in_screen.dart';
 import 'package:ads_platform/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,17 +39,17 @@ class AdsApp extends StatelessWidget {
         SignIn.id : (context) => SignIn(),
         SignUp.id : (context) => SignUp(),
         HomePage.id : (context) => HomePage(),
-        NewAd.id : (context) => NewAd(null,null,null),
+        NewAd.id : (context) => NewAd(null,null,null,null,null,null,null),
         AllAds.id : (context) => AllAds(),
         CarsScreen.id : (context) => CarsScreen(),
         ClosesScreen.id : (context) => ClosesScreen(),
         PhonesScreen.id : (context) => PhonesScreen(),
         PcScreen.id : (context) => PcScreen(),
-        ImagePick.id : (context) => ImagePick(null,null,null),
+        ImagePick.id : (context) => ImagePick(null,null,null,null,null,null,null),
       },
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.green
       ),
     );
   }

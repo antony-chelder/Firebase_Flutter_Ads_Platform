@@ -28,13 +28,30 @@ class _HomeViewState extends State<HomeView> {
         centerTitle: true,
         actions: [
           IconButton(onPressed:(user!= null || googleUser!=null)? ()async {
-            if(googleUser == null) {
-              await _auth.signOut();
-              Navigator.pushNamed(context, SignIn.id);
-            } else {
-              await _googleSignIn.signOut();
-              Navigator.pop(context);
-            }
+            showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                title: Text('Warning',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold),),
+                content: Text('Do you really want to exit?',style: TextStyle(color: Colors.black)),
+                actions: [
+                  TextButton(onPressed: () async{
+                    if(googleUser == null) {
+                      await _auth.signOut();
+                      Navigator.pushNamed(context, SignIn.id);
+                    } else {
+                      await _googleSignIn.signOut();
+                      Navigator.pushNamed(context, SignIn.id);
+                    }
+                  }, child: Text('Yes',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold))),
+                  TextButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, child: Text('No',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold)))
+                ],
+
+              );
+
+            });
+
           } : null, icon:  (user!= null || googleUser!=null) ?  Icon(Icons.exit_to_app) : Icon(null))
         ],
         automaticallyImplyLeading: false,
@@ -68,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(right: 30.0)),
+                Padding(padding: EdgeInsets.only(right: 50.0)),
                 Material(
                   child: Ink(
                     decoration: boxdecoration,
@@ -93,7 +110,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(height: 24,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -119,7 +136,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(right: 30.0)),
+              Padding(padding: EdgeInsets.only(right: 50.0)),
               Material(
                 child: Ink(
                   decoration: boxdecoration,
@@ -144,7 +161,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(height: 24,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -170,7 +187,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(right: 30.0)),
+              Padding(padding: EdgeInsets.only(right: 50.0)),
               Material(
                 child: Ink(
                   decoration: boxdecoration,
@@ -181,6 +198,13 @@ class _HomeViewState extends State<HomeView> {
                     child: Container(
                       height: 100.0,
                       width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('Animals',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
 
                     ),
                   ),
@@ -188,7 +212,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(height: 24,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -197,27 +221,41 @@ class _HomeViewState extends State<HomeView> {
                   decoration: boxdecoration,
                   child: InkWell(
                     onTap: (){
-                      print('Hello');
+                      Navigator.pushNamed(context, AllAds.id);
                     },
                     child: Container(
                       height: 100.0,
                       width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('Houses',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
 
                     ),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(right: 30.0)),
+              Padding(padding: EdgeInsets.only(right: 50.0)),
               Material(
                 child: Ink(
                   decoration: boxdecoration,
                   child: InkWell(
                     onTap: (){
-                      print('Hello');
+                      Navigator.pushNamed(context, CarsScreen.id);
                     },
                     child: Container(
                       height: 100.0,
                       width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('Flats',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
 
                     ),
                   ),
@@ -225,6 +263,109 @@ class _HomeViewState extends State<HomeView> {
               ),
             ],
           ),
+          SizedBox(height: 24,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Material(
+                child: Ink(
+                  decoration: boxdecoration,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, AllAds.id);
+                    },
+                    child: Container(
+                      height: 100.0,
+                      width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('For Sport',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
+
+                    ),
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(right: 50.0)),
+              Material(
+                child: Ink(
+                  decoration: boxdecoration,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, CarsScreen.id);
+                    },
+                    child: Container(
+                      height: 100.0,
+                      width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('For Music',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
+
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 24,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Material(
+                child: Ink(
+                  decoration: boxdecoration,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, AllAds.id);
+                    },
+                    child: Container(
+                      height: 100.0,
+                      width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('For Kids',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
+
+                    ),
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(right: 50.0)),
+              Material(
+                child: Ink(
+                  decoration: boxdecoration,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, CarsScreen.id);
+                    },
+                    child: Container(
+                      height: 100.0,
+                      width: 100.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text('Other',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                        ),
+                      ),
+
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16,),
         ],
       ),
     );

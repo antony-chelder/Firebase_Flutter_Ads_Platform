@@ -54,8 +54,10 @@ class _PcScreenState extends State<PcScreen> {
                 itemBuilder: (context,index){
                   DocumentSnapshot ads = snapshot.data!.docs[index];
                   final userad = (ads.data()as dynamic)['userid'];
-                  return Ads((ads.data() as dynamic)['title'], (ads.data() as dynamic)['price'],(ads.data() as dynamic)['url1'],
-                      userad == user?.uid || userad == googleUser?.id?IconButton(
+                  return Ads((ads.data() as dynamic)['title'], (ads.data() as dynamic)['price'],(ads.data() as dynamic)['url1'],(ads.data() as dynamic)['desc'],
+                      (ads.data() as dynamic)['location'],
+                      userad == user?.uid || userad == googleUser?.id?ElevatedButton(
+                        child: Text('Удалить'),
                           onPressed: userad == user?.uid || userad == googleUser?.id?() async{
                             bool result = await DataConnectionChecker().hasConnection;
                             try {
@@ -88,15 +90,14 @@ class _PcScreenState extends State<PcScreen> {
                             }
 
                           } : null,
-                          icon: userad == user?.uid || userad == googleUser?.id?Icon(Icons.delete) : Icon(null)
 
                       ) : null,
-                      IconButton(
-                          icon: userad == user?.uid || userad == googleUser?.id?Icon(Icons.edit) : Icon(null) ,
+                      ElevatedButton(
+                          child: Text('Удалить'),
                           onPressed:(){
                             print('Click');
                           }
-                      )
+                      ),null,null
                   );
 
                 });

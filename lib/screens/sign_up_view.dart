@@ -6,101 +6,101 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class SignUp extends StatefulWidget {
+class SignUpView extends StatefulWidget {
   static const id = 'sign_up_id';
 
   @override
   _SignUpState createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends State<SignUpView> {
   final textemaIlcontroller = TextEditingController();
   final textpasswordcontroller = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   String errormessage = '';
   bool showpreogress = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.navy[200],
-      body: ModalProgressHUD(
-        inAsyncCall: showpreogress,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Form(
-            key: _formkey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Buy me', style: TextStyle(fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),),
-                SizedBox(height: 12.0,),
+        backgroundColor: MyColors.navy[200],
+        body: ModalProgressHUD(
+          inAsyncCall: showpreogress,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Buy me', style: TextStyle(fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),),
+                  SizedBox(height: 12.0,),
 
 
-                   TextFormField(
+                  TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     validator: validatoremail,
                     decoration: textfielddecoration,
                     controller: textemaIlcontroller,
                   ),
 
-                SizedBox(height: 12.0,),
+                  SizedBox(height: 12.0,),
 
-                 TextFormField(
+                  TextFormField(
                     validator: validatorpassword,
                     obscureText: true,
                     decoration: textfielddecoration.copyWith(
-                        prefixIcon: Icon(Icons.lock,color: MyColors.navy[50]), hintText: 'Enter password'),
+                        prefixIcon: Icon(Icons.lock, color: MyColors.navy[50]),
+                        hintText: 'Enter password'),
                     controller: textpasswordcontroller,
                   ),
                   SizedBox(height: 7.0,),
-                    Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Flexible(
-                          child: Text(errormessage,style: TextStyle(fontSize: 12,color: Colors.lightGreenAccent)),
+                        child: Text(errormessage, style: TextStyle(
+                            fontSize: 12, color: Colors.lightGreenAccent)),
                       ),
                     ],
-                    ),
+                  ),
 
-                SizedBox(height: 16.0,),
-                Buttons(MyColors.navy, 'Register', () async {
-                  setState(() {
-                    showpreogress = true;
-                  });
-                  try {
-                    if(_formkey.currentState!.validate()) {
-                      final signUpuser = await _auth
-                          .createUserWithEmailAndPassword(
-                          email: textemaIlcontroller.text,
-                          password: textpasswordcontroller.text);
-                      errormessage = '';
-                      if (signUpuser != null) {
-                        Navigator.pushNamed(context, HomePage.id);
+                  SizedBox(height: 16.0,),
+                  Buttons(MyColors.navy, 'Register', () async {
+                    setState(() {
+                      showpreogress = true;
+                    });
+                    try {
+                      if (_formkey.currentState!.validate()) {
+                        final signUpuser = await _auth
+                            .createUserWithEmailAndPassword(
+                            email: textemaIlcontroller.text,
+                            password: textpasswordcontroller.text);
+                        errormessage = '';
+                        if (signUpuser != null) {
+                          Navigator.pushNamed(context, HomePage.id);
+                        }
                       }
+                    } on FirebaseAuthException catch (e) {
+                      errormessage = e.message!;
                     }
-                  } on FirebaseAuthException catch (e) {
-                    errormessage = e.message!;
-                  }
-                  setState(() {
-                    showpreogress = false;
-                  });
-                },TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold)),
-                Buttons(Colors.white, 'Back', () {
-                  Navigator.pop(context);
-                }, TextStyle(color: MyColors.navy[200], fontSize: 24.0, fontWeight: FontWeight.bold))
-              ],
+                    setState(() {
+                      showpreogress = false;
+                    });
+                  }, TextStyle(color: Colors.white,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold))
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
-
 String? validatoremail(String? formvalidator){
   if(formvalidator!.isEmpty) {
     return 'Email field is required';
@@ -126,4 +126,3 @@ String? validatorpassword(String? formvalidator){
   return null;
 
 }
-

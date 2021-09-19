@@ -2,8 +2,9 @@ import 'package:ads_platform/screens/favourite_screen.dart';
 import 'package:ads_platform/screens/home_view.dart';
 import 'package:ads_platform/screens/my_ads_screen.dart';
 import 'package:ads_platform/screens/new_ad_screen.dart';
-import 'package:ads_platform/screens/sign_in_screen.dart';
-import 'package:ads_platform/screens/sign_up_screen.dart';
+import 'package:ads_platform/screens/sign_in_view.dart';
+import 'package:ads_platform/screens/sign_up_view.dart';
+import 'package:ads_platform/ui/colors.dart';
 import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +19,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   int noUserIndex = 0;
+
   List<Widget> noUserPageList = <Widget>[
     HomeView(),
-    SignIn(),
-    SignUp()
+    SignInView(),
+    SignUpView()
   ];
   List<Widget> pageList = <Widget>[
     HomeView(),
     MyAds(),
-    NewAd(null,null,null),
+    NewAd(null,null,null,null,null,null,null),
     FavouriteAds()
   ];
   final user = FirebaseAuth.instance.currentUser;
@@ -50,8 +52,8 @@ class _HomePageState extends State<HomePage> {
                 child: pageList[pageIndex]
             ),
             bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: Colors.purpleAccent[400],
-              selectedIconTheme: IconThemeData(color: Colors.purple),
+              backgroundColor: MyColors.navy[200],
+              selectedIconTheme: IconThemeData(color: MyColors.navy[400]),
               selectedItemColor: Colors.white70,
               unselectedItemColor: Colors.white70,
               unselectedIconTheme: IconThemeData(color: Colors.white),
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         );
       } else {
         return Scaffold(
-          body: NewAd(null,null,null
+          body: NewAd(null,null,null,null,null,null,null
           ),
         );
       }
@@ -88,8 +90,8 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             body: noUserPageList[noUserIndex],
             bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: Colors.purpleAccent[400],
-              selectedIconTheme: IconThemeData(color: Colors.purple),
+              backgroundColor: MyColors.navy[200],
+              selectedIconTheme: IconThemeData(color: MyColors.navy[400]),
               selectedItemColor: Colors.white70,
               unselectedItemColor: Colors.white70,
               unselectedIconTheme: IconThemeData(color: Colors.white),
@@ -114,7 +116,7 @@ class _HomePageState extends State<HomePage> {
         );
       } else {
         return Scaffold(
-          body: noUserIndex == 1 ? SignIn() : SignUp(),
+          body: noUserIndex == 1 ? SignInView() : SignUpView(),
         );
       }
     }
